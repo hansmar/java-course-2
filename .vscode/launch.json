@@ -1,0 +1,11 @@
+{
+  "configurations": [
+    {
+      "type": "java",
+      "name": "Launch Bombastic",
+      "request": "launch",
+      "mainClass": "Main",
+      "vmArgs": "--module-path /Users/hansmar/javafx/javafx-sdk-25.0.5/lib --add-modules javafx.controls --enable-native-access=javafx.graphics"
+    }
+  ]
+}
