@@ -1,5 +1,8 @@
 package bombastic.game;
 
+
+import bombastic.game.entities.Crate;
+import bombastic.game.entities.Wall;
 import bombastic.Model;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -34,6 +37,16 @@ public class GameView extends StackPane {
         StackPane.setMargin(mainMenuButton, new Insets(10));
 
         drawArena();
+
+        Image wallImage = new Image(getClass().getResource("/images/terrain/wall.png").toExternalForm());
+        Image crateImage = new Image(getClass().getResource("/images/terrain/crate.png").toExternalForm());
+
+        int size = GameSettings.TILE_SIZE;
+        Wall wall = new Wall(0, 0, size, size, wallImage);
+        Crate crate = new Crate(1 * size, 0, size, size, crateImage);
+
+        wall.render(gc);
+        crate.render(gc);
 
         getStyleClass().add("game-view");
     }
