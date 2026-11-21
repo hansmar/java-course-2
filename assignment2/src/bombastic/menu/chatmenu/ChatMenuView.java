@@ -33,7 +33,7 @@ public class ChatMenuView extends BorderPane {
 
         HBox topRow = new HBox(10, usersBox, messagesBox);
         HBox.setHgrow(messagesBox, Priority.ALWAYS);
-        // topRow.setStyle("-fx-border-color: red; -fx-border-width: 2;");
+        // topRow.getStyleClass().add("test-border");
 
         inputArea.setPromptText("Enter message here...");
         inputArea.setWrapText(true);
@@ -41,6 +41,7 @@ public class ChatMenuView extends BorderPane {
         VBox buttons = new VBox(10, sendButton, mainMenuButton);
         HBox bottomRow = new HBox(10, inputArea, buttons);
         HBox.setHgrow(inputArea, Priority.ALWAYS);
+        // bottomRow.getStyleClass().add("test-border2");
 
         setCenter(topRow);
         setBottom(bottomRow);
@@ -51,7 +52,7 @@ public class ChatMenuView extends BorderPane {
 
     private Label createTitle(String text) {
         Label title = new Label(text);
-        title.setStyle("-fx-text-fill: white; -fx-font-size: 18px; -fx-font-weight: bold;");
+        title.getStyleClass().add("title-text");
         return title;
     }
 

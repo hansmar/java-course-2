@@ -15,13 +15,13 @@ public class MainMenuView extends VBox {
     public MainMenuView(Model model) {
         super(10);
         setAlignment(Pos.CENTER);
-        startButton.setPrefWidth(200);
-        chatButton.setPrefWidth(200);
-        settingsButton.setPrefWidth(200);
-        exitButton.setPrefWidth(200);
+        startButton.getStyleClass().add("menu-choice");
+        chatButton.getStyleClass().add("menu-choice");
+        settingsButton.getStyleClass().add("menu-choice");
+        exitButton.getStyleClass().add("menu-choice");
         getChildren().addAll(startButton, chatButton, settingsButton, exitButton);
         backgroundProperty().bind(model.backgroundProperty());
-        // setStyle("-fx-border-color: red; -fx-border-width: 3;");
+        // getStyleClass().add("test-border");
     }
 
     public Button getStartButton() {

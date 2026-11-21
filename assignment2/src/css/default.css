@@ -1,0 +1,43 @@
+.root {
+    -text-colour: white;
+    -game-background-colour: black;
+}
+
+.menu-choice {
+    -fx-pref-width: 200px;
+}
+
+.menu-choice-item {
+    -fx-pref-width: 196px;
+}
+
+.title-text {
+    -fx-text-fill: -text-colour;
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+}
+
+.info-text {
+    -fx-text-fill: -text-colour;
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+}
+
+.game-view {
+    -fx-background-color: -game-background-colour;
+}
+
+.game-text {
+    -fx-text-fill: -text-colour;
+    -fx-font-size: 18px;
+}
+
+.test-border {
+    -fx-border-color: red;
+    -fx-border-width: 2;
+}
+
+.test-border2 {
+    -fx-border-color: yellow;
+    -fx-border-width: 2;
+}

@@ -23,22 +23,23 @@ public class SettingsMenuView extends VBox {
         super(10);
         setAlignment(Pos.CENTER);
 
-        backgroundMenu.setPrefWidth(200);
-        arenaMenu.setPrefWidth(200);
+        backgroundMenu.getStyleClass().add("menu-choice");
+        arenaMenu.getStyleClass().add("menu-choice");
+        mainMenuButton.getStyleClass().add("menu-choice");
 
         backgroundMenu.getItems().addAll(background1Item, background2Item, background3Item);
         for (MenuItem item : backgroundMenu.getItems()) {
-            item.setStyle("-fx-pref-width: 184px;");
+            item.getStyleClass().add("menu-choice-item");
         }
 
         for (String arena : Model.ARENAS) {
             MenuItem item = new MenuItem(arena);
-            item.setStyle("-fx-pref-width: 184px;");
+            item.getStyleClass().add("menu-choice-item");
             arenaMenu.getItems().add(item);
         }
 
         arenaLabel.textProperty().bind(Bindings.concat("Current arena: ", model.arenaProperty()));
-        arenaLabel.setStyle("-fx-text-fill: white; -fx-font-size: 16px; -fx-font-weight: bold;");
+        arenaLabel.getStyleClass().add("info-text");
 
         getChildren().addAll(backgroundMenu, arenaMenu, mainMenuButton, arenaLabel);
         backgroundProperty().bind(model.backgroundProperty());

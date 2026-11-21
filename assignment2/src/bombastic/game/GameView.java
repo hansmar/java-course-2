@@ -15,11 +15,11 @@ public class GameView extends BorderPane {
 
     public GameView(Model model) {
         arenaLabel.textProperty().bind(Bindings.concat("Game is loading. Arena: ", model.arenaProperty()));
-        arenaLabel.setStyle("-fx-text-fill: white; -fx-font-size: 18px;");
+        arenaLabel.getStyleClass().add("game-text");
         setCenter(arenaLabel);
         setBottom(mainMenuButton);
         BorderPane.setMargin(mainMenuButton, new Insets(10));
-        setStyle("-fx-background-color: black;");
+        getStyleClass().add("game-view");
     }
 
     public Button getMainMenuButton() {
