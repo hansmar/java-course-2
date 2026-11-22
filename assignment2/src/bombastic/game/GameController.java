@@ -3,8 +3,11 @@ package bombastic.game;
 import java.util.List;
 import bombastic.Controller;
 import bombastic.Model;
+import bombastic.game.entities.Bomb;
 import bombastic.game.entities.Entity;
+import bombastic.game.entities.Player;
 import javafx.animation.AnimationTimer;
+import javafx.scene.input.KeyCode;
 
 public class GameController {
 
@@ -19,8 +22,8 @@ public class GameController {
             parent.showMainMenu();
         });
         view.setOnKeyDown(code -> {
-            gameModel.getPlayer1().keyPressed(code);
-            gameModel.getPlayer2().keyPressed(code);
+            keyPressed(gameModel.getPlayer1(), code);
+            keyPressed(gameModel.getPlayer2(), code);
         });
         view.setOnKeyUp(code -> {
             gameModel.getPlayer1().keyReleased(code);
@@ -47,9 +50,21 @@ public class GameController {
                 List<Entity[]> collisions = gameModel.findCollisions();
                 gameModel.processCollisions(collisions);
 
+                gameModel.applyChanges();
+
                 view.render(gameModel.getEntities());
             }
         };
+    }
+
+    private void keyPressed(Player player, KeyCode code) {
+        player.keyPressed(code);
+        if (code == player.getBombKey()) {
+            Bomb bomb = player.placeBomb();
+            if (bomb != null) {
+                gameModel.addEntity(bomb);
+            }
+        }
     }
 
     public void start() {

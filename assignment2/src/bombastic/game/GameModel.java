@@ -12,6 +12,7 @@ public class GameModel {
     private final List<Entity> entities;
     private final Player player1;
     private final Player player2;
+    private final List<Entity> newEntities = new ArrayList<>();
 
     public GameModel() {
         Arena arena = new Arena();
@@ -48,9 +49,19 @@ public class GameModel {
 
     public void processCollisions(List<Entity[]> collisions) {
        for (Entity[] pair : collisions) {
-    System.out.println(pair[0].getClass().getSimpleName() + " hits " + pair[1].getClass().getSimpleName());
-    pair[0].interact(pair[1]);
-    pair[1].interact(pair[0]);
-}
+            System.out.println(pair[0].getClass().getSimpleName() + " hits " + pair[1].getClass().getSimpleName());
+            pair[0].interact(pair[1]);
+            pair[1].interact(pair[0]);
+        }
+    }
+
+    public void addEntity(Entity entity) {
+        newEntities.add(entity);
+    }
+
+    public void applyChanges() {
+        entities.addAll(entities.indexOf(player1), newEntities);
+        newEntities.clear();
+        entities.removeIf(entity -> entity.isRemoved());
     }
 }

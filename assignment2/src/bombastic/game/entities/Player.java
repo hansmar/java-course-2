@@ -1,5 +1,6 @@
 package bombastic.game.entities;
 
+import bombastic.game.GameSettings;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 
@@ -9,6 +10,7 @@ public class Player extends Entity {
     private int maxBombs = 1;
     private int range = 1;
     private double speed = 0.15;
+    private int activeBombs = 0;
 
     private final KeyCode upKey;
     private final KeyCode downKey;
@@ -85,6 +87,29 @@ public class Player extends Entity {
             x = previousX;
             y = previousY;
         }
+    }
+
+    public Bomb placeBomb() {
+        if (activeBombs >= maxBombs) {
+            return null;
+        }
+        int size = GameSettings.TILE_SIZE;
+        int col = (int) ((x + width / 2) / size);
+        int row = (int) ((y + height / 2) / size);
+        activeBombs++;
+        return new Bomb(col * size, row * size, size, this);
+    }
+
+    public void bombExploded() {
+        activeBombs--;
+    }
+
+    public KeyCode getBombKey() {
+        return bombKey;
+    }
+
+    public int getRange() {
+        return range;
     }
 
     public boolean isDead() {

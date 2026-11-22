@@ -10,6 +10,7 @@ public abstract class Entity {
     protected double width;
     protected double height;
     protected Image image;
+    private boolean removed = false;
 
     public Entity(double x, double y, double width, double height, Image image) {
         this.x = x;
@@ -33,6 +34,14 @@ public abstract class Entity {
 
     public double getHeight() {
         return height;
+    }
+
+    public void remove() {
+        removed = true;
+    }
+
+    public boolean isRemoved() {
+        return removed;
     }
 
     public abstract boolean isOccupying();
