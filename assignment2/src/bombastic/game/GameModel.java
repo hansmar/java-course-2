@@ -2,10 +2,13 @@ package bombastic.game;
 
 import java.util.List;
 import java.util.ArrayList;
-
 import bombastic.game.arena.Arena;
 import bombastic.game.entities.Entity;
 import bombastic.game.entities.Player;
+import bombastic.game.entities.Bomb;
+import bombastic.game.entities.Crate;
+import bombastic.game.entities.Explosion;
+import bombastic.game.entities.Wall;
 
 public class GameModel {
 
@@ -60,8 +63,54 @@ public class GameModel {
     }
 
     public void applyChanges() {
+
+        for (Entity entity : entities) {
+            if (entity instanceof Bomb) {
+                Bomb bomb = (Bomb) entity;
+                if (bomb.isExploding()) {
+                    explode(bomb);
+                }
+            }
+        }
+
         entities.addAll(entities.indexOf(player1), newEntities);
         newEntities.clear();
         entities.removeIf(entity -> entity.isRemoved());
+    }
+
+    private void explode(Bomb bomb) {
+        bomb.finishExplosion();
+        double size = GameSettings.TILE_SIZE;
+        addEntity(new Explosion(bomb.getPositionX(), bomb.getPositionY(), size));
+        spread(bomb, 1, 0);
+        spread(bomb, -1, 0);
+        spread(bomb, 0, 1);
+        spread(bomb, 0, -1);
+    }
+
+    private void spread(Bomb bomb, int dx, int dy) {
+        double size = GameSettings.TILE_SIZE;
+        for (int i = 1; i <= bomb.getRange(); i++) {
+            double x = bomb.getPositionX() + dx * i * size;
+            double y = bomb.getPositionY() + dy * i * size;
+            Entity obstacle = findObstacleAt(x, y);
+            if (obstacle instanceof Wall) {
+                return;
+            }
+            addEntity(new Explosion(x, y, size));
+            if (obstacle instanceof Crate) {
+                return;
+            }
+        }
+    }
+
+    private Entity findObstacleAt(double x, double y) {
+        for (Entity entity : entities) {
+            if ((entity instanceof Wall || entity instanceof Crate)
+                    && entity.getPositionX() == x && entity.getPositionY() == y) {
+                return entity;
+            }
+        }
+        return null;
     }
 }

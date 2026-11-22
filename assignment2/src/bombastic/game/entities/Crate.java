@@ -15,5 +15,8 @@ public class Crate extends Entity {
 
     @Override
     public void interact(Entity other) {
+        if (other instanceof Explosion) {
+            remove();
+        }
     }
 }

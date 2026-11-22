@@ -11,6 +11,7 @@ public class Player extends Entity {
     private int range = 1;
     private double speed = 0.15;
     private int activeBombs = 0;
+    private double invulnerableTime = 0;
 
     private final KeyCode upKey;
     private final KeyCode downKey;
@@ -61,6 +62,10 @@ public class Player extends Entity {
         previousX = x;
         previousY = y;
 
+        if (invulnerableTime > 0) {
+            invulnerableTime -= dt;
+        }
+
         double distance = speed * dt;
         if (movingUp) {
             y -= distance;
@@ -86,6 +91,8 @@ public class Player extends Entity {
         if (other.isOccupying()) {
             x = previousX;
             y = previousY;
+        } else if (other instanceof Explosion) {
+            takeHit();
         }
     }
 
@@ -110,6 +117,14 @@ public class Player extends Entity {
 
     public int getRange() {
         return range;
+    }
+
+    private void takeHit() {
+        if (invulnerableTime <= 0) {
+            lives--;
+            invulnerableTime = 1000;
+            System.out.println("Player hit, lives left: " + lives);
+        }
     }
 
     public boolean isDead() {
