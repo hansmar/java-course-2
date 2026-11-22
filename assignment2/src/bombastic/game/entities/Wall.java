@@ -15,6 +15,5 @@ public class Wall extends Entity {
 
     @Override
     public void interact(Entity other) {
-        // Empty: walls are indestructible and block movement
     }
 }

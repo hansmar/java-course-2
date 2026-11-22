@@ -15,6 +15,5 @@ public class Crate extends Entity {
 
     @Override
     public void interact(Entity other) {
-        // Empty for now (explosions come in Step 8)
     }
 }

@@ -1,5 +1,6 @@
 package bombastic.game;
 
+import java.util.List;
 import bombastic.Controller;
 import bombastic.Model;
 import bombastic.game.entities.Entity;
@@ -38,9 +39,13 @@ public class GameController {
                 lastTime = currentTime;
                 // System.out.println("dt: " + dt);
 
+
                 for (Entity entity : gameModel.getEntities()) {
                     entity.update(dt);
                 }
+
+                List<Entity[]> collisions = gameModel.findCollisions();
+                gameModel.processCollisions(collisions);
 
                 view.render(gameModel.getEntities());
             }

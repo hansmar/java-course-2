@@ -21,6 +21,9 @@ public class Player extends Entity {
     private boolean movingLeft;
     private boolean movingRight;
 
+    private double previousX;
+    private double previousY;
+
     public Player(double x, double y, double size, Image image,
                   KeyCode upKey, KeyCode downKey, KeyCode leftKey, KeyCode rightKey, KeyCode bombKey) {
         super(x, y, size, size, image);
@@ -53,6 +56,9 @@ public class Player extends Entity {
 
     @Override
     public void update(double dt) {
+        previousX = x;
+        previousY = y;
+
         double distance = speed * dt;
         if (movingUp) {
             y -= distance;
@@ -75,6 +81,10 @@ public class Player extends Entity {
 
     @Override
     public void interact(Entity other) {
+        if (other.isOccupying()) {
+            x = previousX;
+            y = previousY;
+        }
     }
 
     public boolean isDead() {
