@@ -25,6 +25,8 @@ public class GameView extends StackPane {
         gc = canvas.getGraphicsContext2D();
         gc.setImageSmoothing(false);
 
+        canvas.setFocusTraversable(true);
+
         getChildren().addAll(canvas, mainMenuButton);
         StackPane.setAlignment(mainMenuButton, Pos.BOTTOM_LEFT);
         StackPane.setMargin(mainMenuButton, new Insets(10));
@@ -40,5 +42,9 @@ public class GameView extends StackPane {
 
     public Button getMainMenuButton() {
         return mainMenuButton;
+    }
+
+    public Canvas getCanvas() {
+        return canvas;
     }
 }

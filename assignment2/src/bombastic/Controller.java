@@ -37,9 +37,9 @@ public class Controller {
     }
 
     public void showGame() {
-        gameController.start();
         // System.out.println("Start game, arena is: " + model.arenaProperty().get());
         view.show(gameController.getView());
+        gameController.start();
     }
 
     public View getView() {

@@ -18,6 +18,16 @@ public class GameController {
             parent.showMainMenu();
         });
 
+        view.getCanvas().setOnKeyPressed(e -> {
+        gameModel.getPlayer1().keyPressed(e.getCode());
+            gameModel.getPlayer2().keyPressed(e.getCode());
+        });
+
+        view.getCanvas().setOnKeyReleased(e -> {
+            gameModel.getPlayer1().keyReleased(e.getCode());
+            gameModel.getPlayer2().keyReleased(e.getCode());
+        });
+
         gameLoop = new AnimationTimer() {
             long lastTime = -1;
 
@@ -41,6 +51,7 @@ public class GameController {
 
     public void start() {
         gameLoop.start();
+        view.getCanvas().requestFocus();
     }
 
     public void stop() {
