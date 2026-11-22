@@ -10,7 +10,7 @@ public class GameController {
 
     public GameController(Model model, Controller parent) {
         view = new GameView(model);
-        view.getMainMenuButton().setOnAction(e -> parent.showMainMenu());
+        view.setOnMainMenu(() -> parent.showMainMenu());
     }
 
     public GameView getView() {

@@ -22,7 +22,7 @@ public class GameView extends BorderPane {
         setStyle("-fx-background-color: black;");
     }
 
-    public Button getMainMenuButton() {
-        return mainMenuButton;
+    public void setOnMainMenu(Runnable action) {
+        mainMenuButton.setOnAction(e -> action.run());
     }
 }
