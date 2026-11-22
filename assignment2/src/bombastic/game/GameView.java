@@ -32,6 +32,7 @@ public class GameView extends StackPane {
     }
 
     public void render(List<Entity> entities) {
+        gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
         for (Entity entity : entities) {
             entity.render(gc);
         }
