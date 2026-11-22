@@ -13,19 +13,17 @@ public class GameController {
 
     public GameController(Model model, Controller parent) {
         view = new GameView(model);
-        view.getMainMenuButton().setOnAction(e -> {
+        view.setOnMainMenu(() -> {
             stop();
             parent.showMainMenu();
         });
-
-        view.getCanvas().setOnKeyPressed(e -> {
-        gameModel.getPlayer1().keyPressed(e.getCode());
-            gameModel.getPlayer2().keyPressed(e.getCode());
+        view.setOnKeyDown(code -> {
+            gameModel.getPlayer1().keyPressed(code);
+            gameModel.getPlayer2().keyPressed(code);
         });
-
-        view.getCanvas().setOnKeyReleased(e -> {
-            gameModel.getPlayer1().keyReleased(e.getCode());
-            gameModel.getPlayer2().keyReleased(e.getCode());
+        view.setOnKeyUp(code -> {
+            gameModel.getPlayer1().keyReleased(code);
+            gameModel.getPlayer2().keyReleased(code);
         });
 
         gameLoop = new AnimationTimer() {
@@ -38,7 +36,7 @@ public class GameController {
                 }
                 double dt = (currentTime - lastTime) / 1_000_000.0;
                 lastTime = currentTime;
-                System.out.println("dt: " + dt);
+                // System.out.println("dt: " + dt);
 
                 for (Entity entity : gameModel.getEntities()) {
                     entity.update(dt);
@@ -51,7 +49,7 @@ public class GameController {
 
     public void start() {
         gameLoop.start();
-        view.getCanvas().requestFocus();
+        view.requestGameFocus();
     }
 
     public void stop() {

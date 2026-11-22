@@ -10,10 +10,10 @@ public class MainMenuController {
 
     public MainMenuController(Model model, Controller parent) {
         view = new MainMenuView(model);
-        view.getStartButton().setOnAction(e -> parent.showGame());
-        view.getChatButton().setOnAction(e -> parent.showChatMenu());
-        view.getSettingsButton().setOnAction(e -> parent.showSettingsMenu());
-        view.getExitButton().setOnAction(e -> Platform.exit());
+        view.setOnStartGame(() -> parent.showGame());
+        view.setOnChat(() -> parent.showChatMenu());
+        view.setOnSettings(() -> parent.showSettingsMenu());
+        view.setOnExit(() -> Platform.exit());
     }
 
     public MainMenuView getView() {

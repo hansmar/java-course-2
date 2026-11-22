@@ -13,6 +13,7 @@ public class ChatModel {
     private final ListProperty<String> users =
             new SimpleListProperty<>(FXCollections.observableArrayList(List.of("Bent", "Karen", "Sammy")));
     private final StringProperty messages = new SimpleStringProperty("");
+    private final StringProperty input = new SimpleStringProperty("");
 
     public ListProperty<String> usersProperty() {
         return users;
@@ -20,6 +21,10 @@ public class ChatModel {
 
     public StringProperty messagesProperty() {
         return messages;
+    }
+
+    public StringProperty inputProperty() {
+        return input;
     }
 
     public void addMessage(String message) {

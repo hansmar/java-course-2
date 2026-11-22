@@ -1,6 +1,8 @@
 package bombastic.menu.settingsmenu;
 
 import bombastic.Model;
+import java.util.function.Consumer;
+
 import javafx.beans.binding.Bindings;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -12,9 +14,6 @@ import javafx.scene.layout.VBox;
 public class SettingsMenuView extends VBox {
 
     private final MenuButton backgroundMenu = new MenuButton("Change background");
-    private final MenuItem background1Item = new MenuItem("Background 1");
-    private final MenuItem background2Item = new MenuItem("Background 2");
-    private final MenuItem background3Item = new MenuItem("Background 3");
     private final MenuButton arenaMenu = new MenuButton("Choose arena");
     private final Label arenaLabel = new Label();
     private final Button mainMenuButton = new Button("Main menu");
@@ -27,9 +26,10 @@ public class SettingsMenuView extends VBox {
         arenaMenu.getStyleClass().add("menu-choice");
         mainMenuButton.getStyleClass().add("menu-choice");
 
-        backgroundMenu.getItems().addAll(background1Item, background2Item, background3Item);
-        for (MenuItem item : backgroundMenu.getItems()) {
+        for (int i = 0; i < Model.BACKGROUNDS.size(); i++) {
+            MenuItem item = new MenuItem("Background " + (i + 1));
             item.getStyleClass().add("menu-choice-item");
+            backgroundMenu.getItems().add(item);
         }
 
         for (String arena : Model.ARENAS) {
@@ -47,23 +47,21 @@ public class SettingsMenuView extends VBox {
         // System.out.println("Arena menu items: " + arenaMenu.getItems().size());
     }
 
-    public MenuItem getBackground1Item() {
-        return background1Item;
+    public void setOnBackgroundChosen(Consumer<String> action) {
+        for (int i = 0; i < Model.BACKGROUNDS.size(); i++) {
+            String fileName = Model.BACKGROUNDS.get(i);
+            backgroundMenu.getItems().get(i).setOnAction(e -> action.accept(fileName));
+        }
     }
 
-    public MenuItem getBackground2Item() {
-        return background2Item;
+    public void setOnArenaChosen(Consumer<String> action) {
+        for (MenuItem item : arenaMenu.getItems()) {
+            // System.out.println("Handler added for: " + item.getText());
+            item.setOnAction(e -> action.accept(item.getText()));
+        }
     }
 
-    public MenuItem getBackground3Item() {
-        return background3Item;
-    }
-
-    public MenuButton getArenaMenu() {
-        return arenaMenu;
-    }
-
-    public Button getMainMenuButton() {
-        return mainMenuButton;
+    public void setOnMainMenu(Runnable action) {
+        mainMenuButton.setOnAction(e -> action.run());
     }
 }

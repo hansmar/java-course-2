@@ -1,6 +1,7 @@
 package bombastic.game;
 
 import java.util.List;
+import java.util.function.Consumer;
 
 import bombastic.Model;
 import bombastic.game.entities.Entity;
@@ -9,6 +10,7 @@ import javafx.geometry.Pos;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.StackPane;
 
 public class GameView extends StackPane {
@@ -22,10 +24,9 @@ public class GameView extends StackPane {
             GameSettings.COLUMNS * GameSettings.TILE_SIZE,
             GameSettings.ROWS * GameSettings.TILE_SIZE
         );
+        canvas.setFocusTraversable(true);
         gc = canvas.getGraphicsContext2D();
         gc.setImageSmoothing(false);
-
-        canvas.setFocusTraversable(true);
 
         getChildren().addAll(canvas, mainMenuButton);
         StackPane.setAlignment(mainMenuButton, Pos.BOTTOM_LEFT);
@@ -40,11 +41,19 @@ public class GameView extends StackPane {
         }
     }
 
-    public Button getMainMenuButton() {
-        return mainMenuButton;
+    public void setOnMainMenu(Runnable action) {
+        mainMenuButton.setOnAction(e -> action.run());
     }
 
-    public Canvas getCanvas() {
-        return canvas;
+    public void setOnKeyDown(Consumer<KeyCode> action) {
+        canvas.setOnKeyPressed(e -> action.accept(e.getCode()));
+    }
+
+    public void setOnKeyUp(Consumer<KeyCode> action) {
+        canvas.setOnKeyReleased(e -> action.accept(e.getCode()));
+    }
+
+    public void requestGameFocus() {
+        canvas.requestFocus();
     }
 }

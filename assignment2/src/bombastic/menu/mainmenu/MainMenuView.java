@@ -24,19 +24,19 @@ public class MainMenuView extends VBox {
         // getStyleClass().add("test-border");
     }
 
-    public Button getStartButton() {
-        return startButton;
+    public void setOnStartGame(Runnable action) {
+        startButton.setOnAction(e -> action.run());
     }
 
-    public Button getChatButton() {
-        return chatButton;
+    public void setOnChat(Runnable action) {
+        chatButton.setOnAction(e -> action.run());
     }
 
-    public Button getSettingsButton() {
-        return settingsButton;
+    public void setOnSettings(Runnable action) {
+        settingsButton.setOnAction(e -> action.run());
     }
 
-    public Button getExitButton() {
-        return exitButton;
+    public void setOnExit(Runnable action) {
+        exitButton.setOnAction(e -> action.run());
     }
 }

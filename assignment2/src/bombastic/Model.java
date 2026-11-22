@@ -16,6 +16,7 @@ import javafx.scene.layout.BackgroundSize;
 public class Model {
 
     public static final List<String> ARENAS = List.of("Classic", "Desert", "Ice");
+    public static final List<String> BACKGROUNDS = List.of("bg1.png", "bg2.png", "bg3.png");
 
     private final ObjectProperty<Background> background = new SimpleObjectProperty<>();
     private final StringProperty arena = new SimpleStringProperty("Classic");   // default arena

@@ -38,6 +38,7 @@ public class ChatMenuView extends BorderPane {
         inputArea.setPromptText("Enter message here...");
         inputArea.setWrapText(true);
         inputArea.setPrefRowCount(4);
+        inputArea.textProperty().bindBidirectional(chatModel.inputProperty());
         VBox buttons = new VBox(10, sendButton, mainMenuButton);
         HBox bottomRow = new HBox(10, inputArea, buttons);
         HBox.setHgrow(inputArea, Priority.ALWAYS);
@@ -56,15 +57,11 @@ public class ChatMenuView extends BorderPane {
         return title;
     }
 
-    public TextArea getInputArea() {
-        return inputArea;
+    public void setOnSend(Runnable action) {
+        sendButton.setOnAction(e -> action.run());
     }
 
-    public Button getSendButton() {
-        return sendButton;
-    }
-
-    public Button getMainMenuButton() {
-        return mainMenuButton;
+    public void setOnMainMenu(Runnable action) {
+        mainMenuButton.setOnAction(e -> action.run());
     }
 }
