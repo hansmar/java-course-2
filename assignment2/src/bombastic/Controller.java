@@ -42,6 +42,10 @@ public class Controller {
         gameController.start();
     }
 
+    public void shutdown() {
+        gameController.shutdown();
+    }
+
     public View getView() {
         return view;
     }

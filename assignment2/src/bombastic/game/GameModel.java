@@ -14,6 +14,10 @@ import bombastic.game.entities.Crate;
 import bombastic.game.entities.Explosion;
 import bombastic.game.entities.LifePowerUp;
 import bombastic.game.entities.Wall;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Future;
 
 public class GameModel {
 
@@ -42,22 +46,44 @@ public class GameModel {
     }
 
     public List<Entity[]> findCollisions() {
+        return findCollisionsFrom(0, 1);
+    }
+
+    public List<Entity[]> findCollisionsConcurrently(ExecutorService executor, int threads) {
+        List<Callable<List<Entity[]>>> tasks = new ArrayList<>();
+        for (int t = 0; t < threads; t++) {
+            int start = t;
+            tasks.add(() -> findCollisionsFrom(start, threads));
+        }
+
         List<Entity[]> collisions = new ArrayList<>();
-        for (int i = 0; i < entities.size(); i++) {
-            for (int j = i + 1; j < entities.size(); j++) {
-                Entity a = entities.get(i);
-                Entity b = entities.get(j);
-                if (CollisionDetection.aabb(a, b)) {
-                        collisions.add(new Entity[] {a, b});
-                }
+        try {
+            for (Future<List<Entity[]>> future : executor.invokeAll(tasks)) {
+                collisions.addAll(future.get());
             }
+        } catch (InterruptedException | ExecutionException e) {
+            throw new RuntimeException(e);
         }
         return collisions;
     }
 
+    private List<Entity[]> findCollisionsFrom(int start, int step) {
+        List<Entity[]> found = new ArrayList<>();
+        for (int i = start; i < entities.size(); i += step) {
+            for (int j = i + 1; j < entities.size(); j++) {
+                Entity a = entities.get(i);
+                Entity b = entities.get(j);
+                if (CollisionDetection.aabb(a, b)) {
+                    found.add(new Entity[] {a, b});
+                }
+            }
+        }
+        return found;
+    }
+
     public void processCollisions(List<Entity[]> collisions) {
        for (Entity[] pair : collisions) {
-            System.out.println(pair[0].getClass().getSimpleName() + " hits " + pair[1].getClass().getSimpleName());
+            // System.out.println(pair[0].getClass().getSimpleName() + " hits " + pair[1].getClass().getSimpleName());
             pair[0].interact(pair[1]);
             pair[1].interact(pair[0]);
         }

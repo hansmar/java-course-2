@@ -15,6 +15,5 @@ public class Floor extends Entity {
 
     @Override
     public void interact(Entity other) {
-        // Empty: players can walk freely on floor tiles
     }
 }

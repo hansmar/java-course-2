@@ -8,12 +8,15 @@ import bombastic.game.entities.Entity;
 import bombastic.game.entities.Player;
 import javafx.animation.AnimationTimer;
 import javafx.scene.input.KeyCode;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class GameController {
 
     private final GameModel gameModel = new GameModel();
     private final GameView view;
     private final AnimationTimer gameLoop;
+    private final ExecutorService executor = Executors.newFixedThreadPool(GameSettings.COLLISION_THREADS);
 
     public GameController(Model model, Controller parent) {
         view = new GameView(model);
@@ -47,7 +50,11 @@ public class GameController {
                     entity.update(dt);
                 }
 
-                List<Entity[]> collisions = gameModel.findCollisions();
+                long startTime = System.nanoTime();
+                List<Entity[]> collisions = gameModel.findCollisionsConcurrently(executor, GameSettings.COLLISION_THREADS);
+                // List<Entity[]> collisions = gameModel.findCollisions();
+                // System.out.println("Collision detection: " + (System.nanoTime() - startTime) / 1000 + " microseconds");
+                
                 gameModel.processCollisions(collisions);
 
                 gameModel.applyChanges();
@@ -78,5 +85,10 @@ public class GameController {
 
     public GameView getView() {
         return view;
+    }
+
+    public void shutdown() {
+        gameLoop.stop();
+        executor.shutdown();
     }
 }

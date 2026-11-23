@@ -123,7 +123,7 @@ public class Player extends Entity {
         if (invulnerableTime <= 0) {
             lives--;
             invulnerableTime = 1000;
-            System.out.println("Player hit, lives left: " + lives);
+            // System.out.println("Player hit, lives left: " + lives);
         }
     }
 

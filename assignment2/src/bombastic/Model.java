@@ -40,9 +40,9 @@ public class Model {
         // System.out.println("Loading: " + getClass().getResource("/images/" + fileName));
         Image image = new Image(getClass().getResource("/images/" + fileName).toExternalForm());
         BackgroundSize size = new BackgroundSize(
-                BackgroundSize.AUTO, BackgroundSize.AUTO, false, false, false, true);
+        BackgroundSize.AUTO, BackgroundSize.AUTO, false, false, false, true);
         BackgroundImage backgroundImage = new BackgroundImage(image,
-                BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, size);
+        BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, size);
         background.set(new Background(backgroundImage));
     }
 }
