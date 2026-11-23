@@ -41,3 +41,13 @@
     -fx-border-color: yellow;
     -fx-border-width: 2;
 }
+
+.result-box {
+    -fx-background-color: rgba(0, 0, 0, 0.6);
+}
+
+.result-text {
+    -fx-text-fill: -text-colour;
+    -fx-font-size: 36px;
+    -fx-font-weight: bold;
+}

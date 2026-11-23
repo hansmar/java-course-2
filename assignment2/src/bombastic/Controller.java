@@ -39,7 +39,7 @@ public class Controller {
     public void showGame() {
         // System.out.println("Start game, arena is: " + model.arenaProperty().get());
         view.show(gameController.getView());
-        gameController.start();
+        gameController.startNewRound();
     }
 
     public void shutdown() {

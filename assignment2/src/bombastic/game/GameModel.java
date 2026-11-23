@@ -33,6 +33,17 @@ public class GameModel {
         player2 = arena.getPlayer2();
     }
 
+    public String getResult() {
+        if (player1.isDead() && player2.isDead()) {
+            return "Draw!";
+        } else if (player1.isDead()) {
+            return "Blue player wins!";
+        } else if (player2.isDead()) {
+            return "Red player wins!";
+        }
+        return null;
+    }
+
     public List<Entity> getEntities() {
         return entities;
     }
