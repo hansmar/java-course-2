@@ -127,6 +127,22 @@ public class Player extends Entity {
         }
     }
 
+    public void increaseMaxBombs() {
+        maxBombs++;
+    }
+
+    public void increaseRange() {
+        range++;
+    }
+
+    public void increaseSpeed() {
+        speed += 0.03;
+    }
+
+    public void addLife() {
+        lives++;
+    }
+
     public boolean isDead() {
         return lives <= 0;
     }

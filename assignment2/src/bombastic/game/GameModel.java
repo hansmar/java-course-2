@@ -5,9 +5,14 @@ import java.util.ArrayList;
 import bombastic.game.arena.Arena;
 import bombastic.game.entities.Entity;
 import bombastic.game.entities.Player;
+import bombastic.game.entities.PowerUp;
+import bombastic.game.entities.RangePowerUp;
+import bombastic.game.entities.SpeedPowerUp;
 import bombastic.game.entities.Bomb;
+import bombastic.game.entities.CapacityPowerUp;
 import bombastic.game.entities.Crate;
 import bombastic.game.entities.Explosion;
+import bombastic.game.entities.LifePowerUp;
 import bombastic.game.entities.Wall;
 
 public class GameModel {
@@ -70,12 +75,34 @@ public class GameModel {
                 if (bomb.isExploding()) {
                     explode(bomb);
                 }
+            } else if (entity instanceof Crate && entity.isRemoved()) {
+                PowerUp powerUp = createRandomPowerUp(entity.getPositionX(), entity.getPositionY());
+                if (powerUp != null) {
+                    addEntity(powerUp);
+                }
             }
         }
 
         entities.addAll(entities.indexOf(player1), newEntities);
         newEntities.clear();
         entities.removeIf(entity -> entity.isRemoved());
+    }
+
+    private PowerUp createRandomPowerUp(double x, double y) {
+        if (Math.random() >= 0.3) {
+            return null;
+        }
+        double size = GameSettings.TILE_SIZE;
+        double type = Math.random();
+        if (type < 0.25) {
+            return new CapacityPowerUp(x, y, size);
+        } else if (type < 0.5) {
+            return new RangePowerUp(x, y, size);
+        } else if (type < 0.75) {
+            return new SpeedPowerUp(x, y, size);
+        } else {
+            return new LifePowerUp(x, y, size);
+        }
     }
 
     private void explode(Bomb bomb) {
